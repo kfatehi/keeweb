@@ -106,6 +106,17 @@ module.exports = function(grunt) {
                 src: 'tmp/desktop/KeeWeb.linux.x64.zip',
                 dest: 'dist/desktop/KeeWeb.linux.x64.zip',
                 nonull: true
+            },
+            'cordova_www': {
+                expand: true,
+                cwd: 'tmp',
+                src: [
+                    'js/**',
+                    'fonts/**',
+                    'css/**'
+                ],
+                dest: 'cordova/www/',
+                nonull: true
             }
         },
         jshint: {
@@ -404,5 +415,20 @@ module.exports = function(grunt) {
         'copy:desktop_win',
         'copy:desktop_linux',
         'clean:desktop_tmp'
+    ]);
+
+    grunt.registerTask('cordova', [
+        'gitinfo',
+        'bower-install-simple',
+        'clean',
+        'jshint',
+        'copy:html',
+        'copy:favicon',
+        'copy:touchicon',
+        'copy:fonts',
+        'webpack',
+        'sass',
+        'postcss',
+        'copy:cordova_www'
     ]);
 };
